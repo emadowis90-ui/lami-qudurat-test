@@ -94,6 +94,7 @@ table.t th{background:#e9eef7}
 .intro{padding:10px 16px;margin-bottom:10px;font-size:15px;color:var(--muted)}
 .intro ul{margin:0;padding-right:18px}
 #toast{display:none;position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#1d2433;color:#fff;padding:10px 20px;border-radius:12px;font-weight:700;z-index:50;box-shadow:0 6px 20px rgba(0,0,0,.25);text-align:center;max-width:90vw}
+body:not(.done) .tab:not(.on){display:none}
 footer{text-align:center;color:var(--muted);font-size:13px;padding:8px 0 16px}
 @media (max-width:980px){
   .tabs{flex-basis:100%}
@@ -800,7 +801,7 @@ S.forEach((s,si)=>{const b=document.createElement('button');b.className='tab';b.
 function renderTabs(){
   [...$('tabs').children].forEach((b,si)=>{const s=S[si],k=s.items.filter(i=>items[i].ans!==null).length;
     b.classList.toggle('on',si===cs);b.classList.toggle('locked',(s.locked||si>cs)&&!done);b.style.cursor=done?'pointer':'default';
-    b.innerHTML=`${s.t}<small>${done?`${hi(s.score)} / ${hi(s.items.length)}`:s.locked?'انتهى':si>cs?'لم يبدأ':`${hi(k)}/${hi(s.items.length)} · ${fmt(s.left)}`}</small>`});
+    b.innerHTML=`${s.t}${done?'':` (${hi(si+1)} من ${hi(S.length)})`}<small>${done?`${hi(s.score)} / ${hi(s.items.length)}`:s.locked?'انتهى':si>cs?'لم يبدأ':`${hi(k)}/${hi(s.items.length)} · ${fmt(s.left)}`}</small>`});
   const s=S[cs],t=$('timer');
   $('clock').textContent=done?'انتهى الاختبار':s.locked?'انتهى الوقت':fmt(s.left);
   t.classList.toggle('low',!done&&!s.locked&&s.left<=120);t.classList.toggle('off',done||s.locked);
